@@ -67,3 +67,46 @@ FROM INFORMATION_SCHEMA.TABLES
 GO 
 
 */
+
+
+-- SOLUTION 1
+
+-- Select rows from a Table or View 'TableOrViewName' in schema 'SchemaName'
+SELECT b.country_name,
+-- Calculate the average temperature of the the partition 
+-- And create business rules to interpret the value
+-- AVG is an in-built function to calculate average
+CASE 
+        WHEN AVG(weather_state)>=25 then 'Hot'
+        WHEN AVG(weather_state)<=15 then 'Cold'
+    ELSE 'Warm'
+    END
+    AS Weather_Type
+FROM Weather AS a
+-- Join with the Countries table to get the Country Name
+LEFT JOIN Countries AS b
+ON b.country_id = a.country_id
+-- Partition the dataset according to the countries
+GROUP BY b.country_name
+GO
+
+-- SOLUTION 2
+
+SELECT b.country_name,
+-- Calculate the average temperature of the the partition 
+-- And create business rules to interpret the value
+-- AVG is an in-built function to calculate average
+CASE 
+        WHEN AVG(weather_state)>=25 then 'Hot'
+        WHEN AVG(weather_state)<=15 then 'Cold'
+    ELSE 'Warm'
+    END
+    AS Weather_Type,
+DATENAME(mm, a.day) AS Month_of_the_year
+FROM Weather AS a
+-- Join with the Countries table to get the Country Name
+LEFT JOIN Countries AS b
+ON b.country_id = a.country_id
+-- Partition the dataset according to the countries
+GROUP BY  b.country_name, DATENAME(mm, a.day)
+ORDER BY  b.country_name ASC, DATENAME(mm, a.day) DESC
