@@ -1,4 +1,3 @@
-import pyspark
 from datetime import datetime
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, DateType
@@ -8,7 +7,7 @@ from pyspark.sql.functions import avg, when, col, date_format, month
 ## Start Spark Session
 spark = SparkSession.builder \
     .master("local") \
-    .appName("Word Count") \
+    .appName("CountryWeather") \
     .config("spark.some.config.option", "some-value") \
     .getOrCreate()
 
