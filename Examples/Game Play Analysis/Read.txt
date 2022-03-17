@@ -31,7 +31,7 @@ Game Play Analysis
 -      CHALLENGE 1       -
 --------------------------
 
-Reports the first login date for each player.
+Report the first login date for each player.
 
 
 -- Result table:
@@ -49,7 +49,7 @@ Reports the first login date for each player.
 --------------------------
 
 
--- Write a SQL query that reports the device that is first logged in for each player.
+-- Reports the device that is first logged in for each player.
 
 -- Result table:
 -- +-----------+-----------+

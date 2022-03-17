@@ -48,3 +48,13 @@ windowspec = (Window.partitionBy('player_id').orderBy('event_date').rangeBetween
 activity_df3 = activity_df.withColumn('games_played_so_far', sum('games_played').over(windowspec))\
   .select('player_id', 'device_id', 'games_played_so_far')
 
+
+# Challenge 5
+#   Identify first login date
+#   identify users that logged in the next date
+#   compute number of install each day
+#   Group by date, and count the number that logged in the next day
+activity_df5 = activity_df.withColumn('install', count('player_id').over(Window.partitionBy('event_date').orderBy('event_date')))\
+  .withColumn('install_dt', min('event_date').over(Window.partitionBy('player_id')))\
+  .withColumn('nextday_logged', when(datediff(col('event_date'), col('install_dt')) == 1, 1).otherwise(0))\
+  
